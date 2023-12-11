@@ -8,7 +8,7 @@
     Title="MuseumsZutrittMauiApp">
 
     <ShellContent
-        Title="Home"
+        Title="Museumsbereich"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
 
