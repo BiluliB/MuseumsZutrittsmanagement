@@ -1,25 +1,44 @@
-﻿namespace MuseumsZutrittMauiApp
+﻿using System.ComponentModel;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics; // Stellen Sie sicher, dass Sie diesen Namespace importieren für die Farben
+
+namespace MuseumsZutrittMauiApp
 {
-    public partial class MainPage : ContentPage
+    public partial class MainPage : ContentPage, INotifyPropertyChanged
     {
-        int count = 0;
+        private Color _visitorIndicatorColor;
+
+        public Color VisitorIndicatorColor
+        {
+            get => _visitorIndicatorColor;
+            set
+            {
+                if (_visitorIndicatorColor != value)
+                {
+                    _visitorIndicatorColor = value;
+                    OnPropertyChanged(nameof(VisitorIndicatorColor));
+                }
+            }
+        }
 
         public MainPage()
         {
             InitializeComponent();
+            BindingContext = this;
+            UpdateVisitorIndicator(21); // Hardcoded für dieses Beispiel
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        public void UpdateVisitorIndicator(int visitorCount)
         {
-            count++;
+            VisitorIndicatorColor = visitorCount < 30 ? Colors.Green : Colors.Red;
+        }
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
+        // INotifyPropertyChanged Implementierung
+        public event PropertyChangedEventHandler PropertyChanged;
 
-            SemanticScreenReader.Announce(CounterBtn.Text);
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
-
 }
