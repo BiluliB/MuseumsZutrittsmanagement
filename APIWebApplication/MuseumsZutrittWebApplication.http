@@ -1,6 +1,0 @@
-@MuseumsZutrittWebApplication_HostAddress = http://localhost:5123
-
-GET {{MuseumsZutrittWebApplication_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
