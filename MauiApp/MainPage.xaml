@@ -1,42 +1,84 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MuseumsZutrittMauiApp.MainPage">
+             xmlns:vm="clr-namespace:MuseumsZutrittMauiApp.ViewModels"
+             x:Class="MuseumsZutrittMauiApp.MainPage"
+             xmlns:converters="clr-namespace:MuseumsZutrittMauiApp.Converters">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:RadioButtonConverter x:Key="RadioButtonConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <vm:MainPageViewModel />
+    </ContentPage.BindingContext>
 
     <ScrollView>
-        <VerticalStackLayout Spacing="25" Padding="30">
+        <VerticalStackLayout Spacing="25" Padding="20">
 
             <!-- Bereich für die Museumsbereiche mit RadioButtons -->
-            <Label Text="Museumsbereich" FontSize="Header" />
-            <RadioButton Content="Bereich 1" GroupName="bereiche" />
-            <RadioButton Content="Bereich 2" GroupName="bereiche" />
+            <StackLayout Orientation="Vertical" Spacing="0">
+                <RadioButton Content="Bereich 1" GroupName="bereiche" IsChecked="{Binding IstBereich1Ausgewaehlt}">
+                    <RadioButton.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="*">0,0,0,5</On>
+                        </OnPlatform>
+                    </RadioButton.Padding>
+                </RadioButton>
+
+                <RadioButton Content="Bereich 2" GroupName="bereiche" IsChecked="{Binding IstBereich2Ausgewaehlt}">
+                    <RadioButton.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="*">0,5,0,0</On>
+                        </OnPlatform>
+                    </RadioButton.Padding>
+                </RadioButton>
+            </StackLayout>
+
+
+
+
+
 
             <!-- Bereich für den Eintritt -->
-            <Button Text="Eintritt" />
+            <Button Text="Eintritt" Command="{Binding EintrittCommand}" />
 
             <!-- Bereich für den Austritt -->
-            <Button Text="Austritt" />
+            <Button Text="Austritt" Command="{Binding AustrittCommand}" />
 
-            <!-- Bereich für den Farbindikator -->
             <!-- Quadratischer Bereich für den Farbindikator -->
-            <Frame HeightRequest="200" WidthRequest="200"
-               HorizontalOptions="Center"
-               VerticalOptions="Center"
-               BorderColor="Black" CornerRadius="0"
-               BackgroundColor="{Binding VisitorIndicatorColor}">
-                <Grid>
-                    <Path Stroke="Black" StrokeThickness="5"
-                      Data="M 0 0 L 1 1 Z" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
-                      Aspect="Uniform"/>
-                    <Path Stroke="Black" StrokeThickness="5"
-                      Data="M 0 1 L 1 0 Z" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
-                      Aspect="Uniform"/>
-                </Grid>
-            </Frame>
+            <Button HeightRequest="300" WidthRequest="{Binding ButtonWidth}"
+        
+        VerticalOptions="Center"
+        BackgroundColor="{Binding IndicatorColor}"
+        Command="{Binding YourCommand}" 
+                CommandParameter="Bereich 1">
+               
+            </Button>
 
 
-            <!-- Bereich für die Anzeige der aktuellen Besucheranzahl -->
-            <Label Text="Aktuelle Anzahl Besucher: 31" FontSize="Caption" />
+
+
+            <!-- Bereich für die Anzeige der aktuellen Besucheranzahl für Bereich 1 -->
+            <Label FontSize="Caption" IsVisible="{Binding IstBereich1Ausgewaehlt}">
+                <Label.Text>
+                    <MultiBinding StringFormat="Aktuelle Anzahl Besucher: {0}">
+                        <Binding Path="BesucherBereich1" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+
+            <!-- Bereich für die Anzeige der aktuellen Besucheranzahl für Bereich 2 -->
+            <Label FontSize="Caption" IsVisible="{Binding IstBereich2Ausgewaehlt}">
+                <Label.Text>
+                    <MultiBinding StringFormat="Aktuelle Anzahl Besucher: {0}">
+                        <Binding Path="BesucherBereich2" />
+                    </MultiBinding>
+                </Label.Text>
+            </Label>
+
 
         </VerticalStackLayout>
     </ScrollView>
