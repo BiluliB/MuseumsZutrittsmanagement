@@ -1,5 +1,7 @@
 ﻿using APIWebApplication.Data;
+using APIWebApplication.DTO.Request;
 using APIWebApplication.DTO.Response;
+using APIWebApplication.Models;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,13 +19,54 @@ namespace APIWebApplication.Services
 
         }
 
-        public async Task<List<AccessLogDTO>> GetAllAsync()
+        public async Task<List<AccessLogResponse>> GetAllAsync()
         {
-            var accessLog = await _context.AccessLog.ToListAsync();
+            var accessLog = await _context.AccessLogs.ToListAsync();
 
 
 
-            return _mapper.Map<List<AccessLogDTO>>(accessLog);
+            return _mapper.Map<List<AccessLogResponse>>(accessLog);
+        }
+
+        public async Task<AccessLogResponse> GetByIdAsync(int id)
+        {
+            var entity = await _context.AccessLogs.FindAsync(id);
+            if (entity == null) return null;
+
+            return _mapper.Map<AccessLogResponse>(entity);
+        }
+
+        public async Task<AccessLogResponse> CreatAsync(CreateAccessLogRequest model)
+        {
+            var mapped = _mapper.Map<AccessLog>(model);
+            _context.AccessLogs.Add(mapped);
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<AccessLogResponse>(mapped);
+
+        }
+
+        public async Task<DeletResponse> DeletAsync(int id)
+        {
+            var entity = await _context.AccessLogs.FindAsync(id);
+            if (entity == null) return null;
+
+            _context.AccessLogs.Remove(entity);
+
+            return new DeletResponse { Id = id };
+
+        }
+
+        public async Task<AccessLogResponse> UpdateAsync(int id, UpdateAccessLogRequest model)
+        {
+            var entity = await _context.AccessLogs.FindAsync(id);
+            if (entity == null) return null;
+
+            _mapper.Map(model, entity);
+            await _context.SaveChangesAsync();
+
+            return _mapper.Map<AccessLogResponse>(entity);
+
         }
     }
 }

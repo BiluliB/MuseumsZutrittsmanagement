@@ -13,19 +13,15 @@ namespace APIWebApplication.Data
             _configuration = configuration;
         }
 
-        public DbSet<AccessLog> AccessLog { get; set; }
+        public DbSet<AccessLog> AccessLogs { get; set; }
         public DbSet<MuseumArea> MuseumAreas { get; set; }
-        public DbSet<OpeningHour> OpeningHour { get; set; }
-        public DbSet<VisitorCapacity> VisitorCapacity { get; set; }
+        public DbSet<OpeningHour> OpeningHours { get; set; }
+        public DbSet<VisitorCapacity> VisitorCapacities { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            if (!optionsBuilder.IsConfigured)
-            {
-                optionsBuilder.UseLazyLoadingProxies();
-                
-            }
+            
             var connectionString = _configuration.GetConnectionString("DefaultConnection");
             optionsBuilder.UseSqlServer(connectionString);
         }

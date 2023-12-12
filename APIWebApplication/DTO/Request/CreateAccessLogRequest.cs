@@ -1,11 +1,19 @@
-﻿namespace APIWebApplication.DTO.Response
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace APIWebApplication.DTO.Request
 {
-    public class AccessLogDTO
+    public class CreateAccessLogRequest
     {
-        public int Id { get; set; }
+        [Required]
         public int MuseumAreaId { get; set; }
+
+        [Required]
         public DateTime EntryTime { get; set; }
+
+        [Required]
         public DateTime ExitTime { get; set; }
+
+        [Required]
         public int CurrentVisitorCount { get; set; }
     }
 }

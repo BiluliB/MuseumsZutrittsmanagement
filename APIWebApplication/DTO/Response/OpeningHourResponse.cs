@@ -1,6 +1,6 @@
 ﻿namespace APIWebApplication.DTO.Response
 {
-    public class OpeningHourDTO
+    public class OpeningHourResponse
     {
         public int Id { get; set; }
         public int MuseumAreaId { get; set; }
