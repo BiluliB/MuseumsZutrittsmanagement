@@ -1,7 +1,8 @@
 
 using APIWebApplication.Data;
+using APIWebApplication.Services;
 using Microsoft.EntityFrameworkCore;
-using System.Globalization;
+
 
 namespace MuseumsZutrittWebApplication
 {
@@ -11,11 +12,16 @@ namespace MuseumsZutrittWebApplication
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container to programm.
             builder.Services.AddScoped<MuseumAreaService>();
+            builder.Services.AddScoped<AccessLogService>();
+            builder.Services.AddScoped<OpeningHourService>();
+            builder.Services.AddScoped<VisitorCapacityService>();
 
             builder.Services.AddControllers();
             

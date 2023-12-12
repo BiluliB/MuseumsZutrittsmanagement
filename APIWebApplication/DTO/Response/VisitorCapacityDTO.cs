@@ -1,12 +1,9 @@
-﻿namespace APIWebApplication.Models
+﻿namespace APIWebApplication.DTO.Response
 {
-    public class VisitorCapacity
+    public class VisitorCapacityDTO
     {
         public int Id { get; set; }
         public int MuseumAreaId { get; set; }
-
-        public virtual MuseumArea MuseumArea { get; set; }
         public int MaxVisitorCount { get; set; }
     }
-
 }

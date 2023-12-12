@@ -2,8 +2,8 @@
 {
     public class AccessLog
     {
-        public int ID { get; set; }
-        public int MuseumAreaID { get; set; }
+        public int Id { get; set; }
+        public int MuseumAreaId { get; set; }
 
         public virtual MuseumArea MuseumArea { get; set; }
         public DateTime EntryTime { get; set; }

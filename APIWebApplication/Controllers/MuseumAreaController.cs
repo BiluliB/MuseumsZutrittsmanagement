@@ -3,7 +3,7 @@
 namespace APIWebApplication.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
 
     public class MuseumAreaController : ControllerBase
     {
@@ -14,9 +14,9 @@ namespace APIWebApplication.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllMuseumAreas()
+        public async Task<IActionResult> GetAllAsync()
         {
-            var museumAreas = await _museumAreaService.GetAllMuseumAreasAsync();
+            var museumAreas = await _museumAreaService.GetAllAsync();
             return Ok(museumAreas);
         }
 

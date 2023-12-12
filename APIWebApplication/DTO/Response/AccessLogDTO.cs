@@ -1,12 +1,11 @@
-﻿namespace APIWebApplication.DTO
+﻿namespace APIWebApplication.DTO.Response
 {
     public class AccessLogDTO
     {
-        public int ID { get; set; }
-        public int MuseumAreaID { get; set; }
+        public int Id { get; set; }
+        public int MuseumAreaId { get; set; }
         public DateTime EntryTime { get; set; }
         public DateTime ExitTime { get; set; }
         public int CurrentVisitorCount { get; set; }
-        public string MuseumAreaName { get; set; }
     }
 }
