@@ -1,6 +1,6 @@
 ﻿namespace APIWebApplication.DTO.Response
 {
-    public class VisitorCapacityDTO
+    public class VisitorCapacityResponse
     {
         public int Id { get; set; }
         public int MuseumAreaId { get; set; }
