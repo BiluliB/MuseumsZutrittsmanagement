@@ -20,13 +20,13 @@ namespace APIWebApplication.Services
 
         }
 
-        public async Task<List<AccessLogResponse>> GetAllAsync()
+        public async Task<List<VisitorCapacityResponse>> GetAllAsync()
         {
             var visitorCapacity = await _context.VisitorCapacities.ToListAsync();
 
             
 
-            return _mapper.Map<List<AccessLogResponse>>(visitorCapacity);
+            return _mapper.Map<List<VisitorCapacityResponse>>(visitorCapacity);
         }
         public async Task<VisitorCapacityResponse> GetByIdAsync(int id)
         {
