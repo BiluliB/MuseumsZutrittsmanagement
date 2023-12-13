@@ -1,4 +1,5 @@
 
+using APIWebApplication.Common;
 using APIWebApplication.Data;
 using APIWebApplication.Services;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,8 @@ namespace MuseumsZutrittWebApplication
             var builder = WebApplication.CreateBuilder(args);
 
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            
+
 
             builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
