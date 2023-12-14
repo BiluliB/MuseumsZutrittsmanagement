@@ -70,8 +70,6 @@ function App() {
       selectedArea === "area1" ? area1Visitors : area2Visitors;
     const newVisitorCount =
       action === "Eintritt" ? currentVisitorCount + 1 : currentVisitorCount - 1;
-
-    // Angenommen, Sie haben eine ID des zu aktualisierenden Eintrags
     const entryId = museumAreaId;
 
     try {
@@ -92,14 +90,12 @@ function App() {
       if (!response.ok) {
         throw new Error(`HTTP-Status: ${response.status}`);
       }
-
-      // Aktualisieren des State nach dem erfolgreichen Update
       if (selectedArea === "area1") {
         setArea1Visitors(newVisitorCount);
       } else {
         setArea2Visitors(newVisitorCount);
       }
-      setUpdateTrigger((prev) => prev + 1); // Aktualisieren des Update-Triggers
+      setUpdateTrigger((prev) => prev + 1);
     } catch (error) {
       console.error("Fehler beim Senden des PUT-Requests:", error);
     }
@@ -163,7 +159,7 @@ function App() {
                 <Button
                   label="Eintritt"
                   onClick={handleEntry}
-                  disabled={isEntryDisabled()} // Hier rufen Sie die Funktion auf
+                  disabled={isEntryDisabled()}
                 />
                 <Button label="Austritt" onClick={handleExit} />
                 <StatusField status={isEntryDisabled() ? "red" : "green"} />

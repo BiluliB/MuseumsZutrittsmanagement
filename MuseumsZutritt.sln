@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiApp.Test", "MauiApp.Test\MauiApp.Test.csproj", "{36B4CD82-450C-4B86-AF25-772E2F195578}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiApp", "MauiApp\MauiApp.csproj", "{4E7A6ECD-F004-4867-BC53-4EABE9F6B726}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIWebApplication", "APIWebApplication\APIWebApplication.csproj", "{F42969F9-6981-47EE-8B2C-9BA7D88CC88C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIWebApplication.Tests", "APIWebApplication.Test\APIWebApplication.Tests.csproj", "{265D7C93-9D58-4010-81F2-6DCF2BD7CEC0}"
@@ -17,16 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{36B4CD82-450C-4B86-AF25-772E2F195578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{36B4CD82-450C-4B86-AF25-772E2F195578}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{36B4CD82-450C-4B86-AF25-772E2F195578}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{36B4CD82-450C-4B86-AF25-772E2F195578}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E7A6ECD-F004-4867-BC53-4EABE9F6B726}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4E7A6ECD-F004-4867-BC53-4EABE9F6B726}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4E7A6ECD-F004-4867-BC53-4EABE9F6B726}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{4E7A6ECD-F004-4867-BC53-4EABE9F6B726}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4E7A6ECD-F004-4867-BC53-4EABE9F6B726}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4E7A6ECD-F004-4867-BC53-4EABE9F6B726}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{F42969F9-6981-47EE-8B2C-9BA7D88CC88C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F42969F9-6981-47EE-8B2C-9BA7D88CC88C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F42969F9-6981-47EE-8B2C-9BA7D88CC88C}.Release|Any CPU.ActiveCfg = Release|Any CPU

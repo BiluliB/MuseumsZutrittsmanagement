@@ -1,37 +1,38 @@
-.config-panel {
-  margin: auto;
-  padding: 20px;
-  background-color: #000; /* oder jede andere Farbe, die Sie bevorzugen */
-  border-collapse: collapse;
-  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0);
-}
-
-.config-panel table {
+/* ConfigPanel.css */
+table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: collapse; /* Entfernt doppelte Linien */
 }
 
-.config-panel th,
-.config-panel td {
-  border: 1px solid #fff; /* Für dunkle Ränder */
-  padding: 8px;
-  text-align: center;
+table,
+th,
+td {
+  border: 1px solid #ccc; /* Fügt Linien hinzu */
 }
 
-.config-panel th {
-  background-color: #000;
+th,
+td {
+  padding: 8px; /* Fügt Polsterung hinzu */
+  text-align: left; /* Textausrichtung */
 }
 
-.config-panel button {
+th {
+  background-color: #999999; /* Hintergrundfarbe für Header */
+}
+
+tr:nth-child(even) {
+  background-color: #999999; /* Zebrastreifen-Stil */
+}
+
+button {
+  margin-right: 5px;
   padding: 5px 10px;
-  background-color: #4caf50; /* Grüne Farbe */
-  color: white;
   border: none;
-  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.config-panel button:hover {
+button:hover {
   background-color: #45a049;
 }

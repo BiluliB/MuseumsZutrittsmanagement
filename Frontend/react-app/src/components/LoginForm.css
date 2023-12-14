@@ -45,3 +45,12 @@
 .login-form button:hover {
   background-color: #0056b3;
 }
+
+.input-error {
+  border: 1px solid red;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
