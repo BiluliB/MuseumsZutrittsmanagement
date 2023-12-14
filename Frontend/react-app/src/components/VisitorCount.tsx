@@ -1,14 +1,18 @@
 import React from "react";
 import "./VisitorCount.css";
 
-/* Property Interface for VisitorCount */
 interface VisitorCountProps {
-  count: number;
+  currentVisitorCount: number;
 }
 
-/* Initialize VisitorCount */
-const VisitorCount: React.FC<VisitorCountProps> = ({ count }) => {
-  return <div className="visitor-count">Aktuelle Anzahl Besucher: {count}</div>;
+const VisitorCount: React.FC<VisitorCountProps> = ({ currentVisitorCount }) => {
+  return (
+    <div className="visitor-count">
+      {currentVisitorCount !== null
+        ? `Aktuelle Anzahl Besucher: ${currentVisitorCount}`
+        : "Fehler beim Abrufen der Daten"}
+    </div>
+  );
 };
 
 export default VisitorCount;

@@ -31,6 +31,17 @@ namespace MuseumsZutrittWebApplication
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowLocalhost",
+                    policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+                });
+            });
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -44,6 +55,7 @@ namespace MuseumsZutrittWebApplication
 
             app.UseAuthorization();
 
+            app.UseCors("AllowLocalhost");
 
             app.MapControllers();
 
