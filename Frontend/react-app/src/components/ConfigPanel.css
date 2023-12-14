@@ -1,0 +1,38 @@
+/* ConfigPanel.css */
+table {
+  width: 100%;
+  border-collapse: collapse; /* Entfernt doppelte Linien */
+}
+
+table,
+th,
+td {
+  border: 1px solid #ccc; /* Fügt Linien hinzu */
+}
+
+th,
+td {
+  padding: 8px; /* Fügt Polsterung hinzu */
+  text-align: left; /* Textausrichtung */
+}
+
+th {
+  background-color: #999999; /* Hintergrundfarbe für Header */
+}
+
+tr:nth-child(even) {
+  background-color: #999999; /* Zebrastreifen-Stil */
+}
+
+button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
