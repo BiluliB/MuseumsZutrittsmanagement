@@ -7,6 +7,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIWebApplication", "APIWeb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIWebApplication.Tests", "APIWebApplication.Test\APIWebApplication.Tests.csproj", "{265D7C93-9D58-4010-81F2-6DCF2BD7CEC0}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiApp", "MauiApp\MauiApp.csproj", "{CED5A25F-B93E-419E-9F0A-8AAD6B932E55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MauiApp.Test", "MauiApp.Test\MauiApp.Test.csproj", "{C497EE2C-E139-48A8-A7C9-630331B7DFBB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{265D7C93-9D58-4010-81F2-6DCF2BD7CEC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{265D7C93-9D58-4010-81F2-6DCF2BD7CEC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{265D7C93-9D58-4010-81F2-6DCF2BD7CEC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CED5A25F-B93E-419E-9F0A-8AAD6B932E55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CED5A25F-B93E-419E-9F0A-8AAD6B932E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CED5A25F-B93E-419E-9F0A-8AAD6B932E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CED5A25F-B93E-419E-9F0A-8AAD6B932E55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C497EE2C-E139-48A8-A7C9-630331B7DFBB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C497EE2C-E139-48A8-A7C9-630331B7DFBB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C497EE2C-E139-48A8-A7C9-630331B7DFBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C497EE2C-E139-48A8-A7C9-630331B7DFBB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
