@@ -1,146 +1,271 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
+using MuseumsZutrittMauiApp.DTO.Request;
 using Microsoft.Maui.Graphics;
+using MuseumsZutrittMauiApp.DTO.Response;
+using System.Net.Http.Json;
+using System.Diagnostics;
 
 namespace MuseumsZutrittMauiApp.ViewModels
 {
     public class MainPageViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private int _besucherBereich1;
-        private int _besucherBereich2;
-        private Color _indicatorColor;
-        private bool _istBereich1Ausgewaehlt;
-        private bool _istBereich2Ausgewaehlt;
-
-        public int BesucherBereich1
+        public ObservableCollection<MuseumAreaResponse> MuseumAreas { get; private set; }
+        private VisitorCapacityResponse _selectedVisitorCapacity;
+        public VisitorCapacityResponse SelectedVisitorCapacity
         {
-            get => _besucherBereich1;
+            get => _selectedVisitorCapacity;
             set
             {
-                _besucherBereich1 = value;
-                OnPropertyChanged(nameof(BesucherBereich1));
-                UpdateIndicatorColor();
+                _selectedVisitorCapacity = value;
+                OnPropertyChanged(nameof(SelectedVisitorCapacity));
+                UpdateUI();
             }
         }
-
-        public int BesucherBereich2
+        public int CurrentVisitorCount { get; private set; }
+        public Color IndicatorColor { get; private set; }
+        public ICommand EintrittCommand { get; private set; }
+        public ICommand AustrittCommand { get; private set; }
+        public bool CanEnter => SelectedVisitorCapacity != null && CurrentVisitorCount < SelectedVisitorCapacity.MaxVisitorCount;
+        public bool CanExit => CurrentVisitorCount > 0;
+        private MuseumAreaResponse _selectedMuseumArea;
+        public MuseumAreaResponse SelectedMuseumArea
         {
-            get => _besucherBereich2;
+            get => _selectedMuseumArea;
             set
             {
-                _besucherBereich2 = value;
-                OnPropertyChanged(nameof(BesucherBereich2));
-                UpdateIndicatorColor();
-            }
-        }
-
-        public Color IndicatorColor
-        {
-            get => _indicatorColor;
-            set
-            {
-                _indicatorColor = value;
-                OnPropertyChanged(nameof(IndicatorColor));
-            }
-        }
-
-        public bool IstBereich1Ausgewaehlt
-        {
-            get => _istBereich1Ausgewaehlt;
-            set
-            {
-                if (_istBereich1Ausgewaehlt != value)
+                if (_selectedMuseumArea != value)
                 {
-                    _istBereich1Ausgewaehlt = value;
-                    OnPropertyChanged(nameof(IstBereich1Ausgewaehlt));
-                    OnPropertyChanged(nameof(SelectedBereich));
-                    UpdateIndicatorColor(); // Hier wird die Methode aufgerufen
+                    _selectedMuseumArea = value;
+                    OnSelectedMuseumAreaChanged();
+                    OnPropertyChanged(nameof(SelectedMuseumArea));
                 }
             }
         }
 
-        public bool IstBereich2Ausgewaehlt
-        {
-            get => _istBereich2Ausgewaehlt;
-            set
-            {
-                if (_istBereich2Ausgewaehlt != value)
-                {
-                    _istBereich2Ausgewaehlt = value;
-                    OnPropertyChanged(nameof(IstBereich2Ausgewaehlt));
-                    OnPropertyChanged(nameof(SelectedBereich));
-                    UpdateIndicatorColor(); // Hier wird die Methode aufgerufen
-                }
-            }
-        }
-
-        public string SelectedBereich
-        {
-            get
-            {
-                if (IstBereich1Ausgewaehlt)
-                    return "Bereich 1";
-                else if (IstBereich2Ausgewaehlt)
-                    return "Bereich 2";
-                else
-                    return string.Empty;
-            }
-        }
-
-        public ICommand EintrittCommand { get; }
-        public ICommand AustrittCommand { get; }
+        private HttpClient _httpClient = new HttpClient();
 
         public MainPageViewModel()
         {
-            EintrittCommand = new Command(HandleEintritt);
-            AustrittCommand = new Command(HandleAustritt);
-            IndicatorColor = Colors.Green; // Setzen Sie eine Standardfarbe
-            IstBereich1Ausgewaehlt = true;
-
-            PropertyChanged += OnSelectedBereichChanged;
+            MuseumAreas = new ObservableCollection<MuseumAreaResponse>();
+            EintrittCommand = new Command(OnEintritt);
+            AustrittCommand = new Command(OnAustritt);
+            IndicatorColor = Colors.Green;
+            LoadMuseumAreas();
         }
 
-        private void OnSelectedBereichChanged(object sender, PropertyChangedEventArgs e)
+        /// <summary>
+        /// Handles the entry action when a visitor enters the museum area.
+        /// </summary>
+        private async void OnEintritt()
         {
-            if (e.PropertyName == nameof(SelectedBereich))
+            var newLogEntry = new CreateAccessLogRequest
             {
-                UpdateIndicatorColor();
+                MuseumAreaId = SelectedMuseumArea.Id,
+                EntryTime = DateTime.Now,
+                ExitTime = DateTime.Now,
+                CurrentVisitorCount = CurrentVisitorCount + 1
+            };
+
+            var response = await _httpClient.PostAsJsonAsync("https://localhost:5000/api/AccessLog", newLogEntry);
+            if (response.IsSuccessStatusCode)
+            {
+                CurrentVisitorCount++;
+                OnPropertyChanged(nameof(CurrentVisitorCount));
+                UpdateUI();
+            }
+            else
+            {
+                HandleErrorResponse(response);
             }
         }
 
-        private void UpdateIndicatorColor()
+        /// <summary>
+        /// Handles the exiting action when a visitor leaves the museum area.
+        /// </summary>
+        private async void OnAustritt()
         {
-            if (SelectedBereich == "Bereich 1")
-                IndicatorColor = BesucherBereich1 >= 35 ? Colors.Red : Colors.Green;
-            else if (SelectedBereich == "Bereich 2")
-                IndicatorColor = BesucherBereich2 >= 20 ? Colors.Red : Colors.Green;
+            if (CurrentVisitorCount > 0)
+            {
+                var newLogEntry = new CreateAccessLogRequest
+                {
+                    MuseumAreaId = SelectedMuseumArea.Id,
+                    EntryTime = DateTime.Now,
+                    ExitTime = DateTime.Now,
+                    CurrentVisitorCount = CurrentVisitorCount - 1
+                };
+
+                var response = await _httpClient.PostAsJsonAsync("https://localhost:5000/api/AccessLog", newLogEntry);
+                if (response.IsSuccessStatusCode)
+                {
+                    CurrentVisitorCount--;
+                    OnPropertyChanged(nameof(CurrentVisitorCount));
+                    UpdateUI();
+                }
+                else
+                {
+                    HandleErrorResponse(response);
+                }
+            }
         }
 
-        private void HandleEintritt()
+        /// <summary>
+        /// Loads the list of museum areas from the server.
+        /// </summary>
+        private async void LoadMuseumAreas()
         {
-            if (SelectedBereich == "Bereich 1")
-                BesucherBereich1++; // Erhöhe den Zähler für Bereich 1
-            else if (SelectedBereich == "Bereich 2")
-                BesucherBereich2++; // Erhöhe den Zähler für Bereich 2
-
-            UpdateIndicatorColor();
+            try
+            {
+                var response = await _httpClient.GetFromJsonAsync<List<MuseumAreaResponse>>("https://localhost:5000/api/MuseumArea");
+                if (response != null)
+                {
+                    MuseumAreas.Clear();
+                    foreach (var area in response)
+                    {
+                        MuseumAreas.Add(area);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                await HandleExceptionAsync(ex);
+            }
         }
 
-        private void HandleAustritt()
+        /// <summary>
+        /// Handles actions when a new museum area is selected.
+        /// </summary>
+        private async void OnSelectedMuseumAreaChanged()
         {
-            if (SelectedBereich == "Bereich 1" && BesucherBereich1 > 0)
-                BesucherBereich1--; // Verringere den Zähler für Bereich 1
-            else if (SelectedBereich == "Bereich 2" && BesucherBereich2 > 0)
-                BesucherBereich2--; // Verringere den Zähler für Bereich 2
+            if (SelectedMuseumArea != null)
+            {
+                var capacity = await FetchVisitorCapacity(SelectedMuseumArea.Id);
+                SetSelectedVisitorCapacity(capacity);
 
-            UpdateIndicatorColor();
+                CurrentVisitorCount = await FetchCurrentVisitorCount(SelectedMuseumArea.Id);
+
+                // Notify the UI that the CurrentVisitorCount has changed
+                OnPropertyChanged(nameof(CurrentVisitorCount));
+                UpdateUI();
+            }
         }
 
+        /// <summary>
+        /// Fetches the visitor capacity for a specific museum area identified by its ID.
+        /// </summary>
+        /// <param name="areaId">The ID of the museum area for which the capacity is to be fetched.</param>
+        /// <returns>A VisitorCapacityResponse object representing the visitor capacity of the specified area.</returns>
+        private async Task<VisitorCapacityResponse> FetchVisitorCapacity(int areaId)
+        {
+            try
+            {
+                var capacities = await _httpClient.GetFromJsonAsync<List<VisitorCapacityResponse>>("https://localhost:5000/api/VisitorCapacity");
+                return capacities?.FirstOrDefault(vc => vc.MuseumAreaId == areaId);
+            }
+            catch (Exception ex)
+            {
+                await HandleExceptionAsync(ex);
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Retrieves the current visitor count for a specified museum area.
+        /// </summary>
+        /// <param name="areaId">The ID of the museum area for which the current visitor count is to be fetched.</param>
+        /// <returns>The current number of visitors in the specified museum area.</returns>
+        private async Task<int> FetchCurrentVisitorCount(int areaId)
+        {
+            try
+            {
+                var accessLogs = await _httpClient.GetFromJsonAsync<List<AccessLogResponse>>("https://localhost:5000/api/AccessLog");
+                var lastLog = accessLogs?.Where(log => log.MuseumAreaId == areaId).OrderByDescending(log => log.EntryTime).FirstOrDefault();
+                return lastLog != null ? lastLog.CurrentVisitorCount : 0;
+            }
+            catch (Exception ex)
+            {
+                await HandleExceptionAsync(ex);
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// Sets the selected visitor capacity for the current museum area.
+        /// </summary>
+        /// <param name="capacity">The visitor capacity response object to be set.</param>
+        private void SetSelectedVisitorCapacity(VisitorCapacityResponse capacity)
+        {
+            _selectedVisitorCapacity = capacity;
+            OnPropertyChanged(nameof(SelectedVisitorCapacity));
+        }
+
+        /// <summary>
+        /// Updates the user interface based on the current visitor count and selected visitor capacity.
+        /// </summary>
+        private void UpdateUI()
+        {
+            if (SelectedVisitorCapacity != null && CurrentVisitorCount != null)
+            {
+                IndicatorColor = CurrentVisitorCount >= SelectedVisitorCapacity.MaxVisitorCount ? Colors.Red : Colors.Green;
+                OnPropertyChanged(nameof(CanEnter));
+                OnPropertyChanged(nameof(CanExit));
+            }
+            else
+            {
+                IndicatorColor = Colors.Green;
+                OnPropertyChanged(nameof(CanEnter));
+                OnPropertyChanged(nameof(CanExit));
+            }
+
+            OnPropertyChanged(nameof(IndicatorColor));
+            OnPropertyChanged(nameof(CanEnter));
+            OnPropertyChanged(nameof(CanExit));
+        }
+
+        /// <summary>
+        /// Handles the HTTP error response from the server.
+        /// </summary>
+        /// <param name="response">The HttpResponseMessage received from the server.</param>
+        private async void HandleErrorResponse(HttpResponseMessage response)
+        {
+            if (!response.IsSuccessStatusCode)
+            {
+                // Log the error
+                Debug.WriteLine($"Error {response.StatusCode}: {response.ReasonPhrase}");
+
+                // Inform the user
+                await Application.Current.MainPage.DisplayAlert(
+                    "Fehler",
+                    $"Es gab ein Problem bei der Kommunikation mit dem Server: {response.ReasonPhrase}",
+                    "OK"
+                );
+            }
+        }
+
+        /// <summary>
+        /// Handles exceptions thrown during API calls.
+        /// </summary>
+        /// <param name="ex">The exception that was thrown.</param>
+        private async Task HandleExceptionAsync(Exception ex)
+        {
+            // Log the exception
+            Debug.WriteLine($"Exception: {ex.Message}");
+
+            // Inform the user
+            await Application.Current.MainPage.DisplayAlert(
+                "Fehler",
+                $"Ein Fehler ist aufgetreten: {ex.Message}",
+                "OK"
+            );
+        }
+
+        // Event handler for the PropertyChanged Events
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

@@ -2,14 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:MuseumsZutrittMauiApp.ViewModels"
-             x:Class="MuseumsZutrittMauiApp.MainPage"
-             xmlns:converters="clr-namespace:MuseumsZutrittMauiApp.Converters">
-
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:RadioButtonConverter x:Key="RadioButtonConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
+             x:Class="MuseumsZutrittMauiApp.MainPage">
 
     <ContentPage.BindingContext>
         <vm:MainPageViewModel />
@@ -24,28 +17,25 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <!-- RadioButtons für Museumsbereiche -->
-        <StackLayout Grid.Row="0" Orientation="Vertical">
-            <!-- RadioButton Bereich 1 -->
-            <RadioButton Content="Bereich 1" GroupName="bereiche" IsChecked="{Binding IstBereich1Ausgewaehlt}" />
-            <!-- RadioButton Bereich 2 -->
-            <RadioButton Content="Bereich 2" GroupName="bereiche" IsChecked="{Binding IstBereich2Ausgewaehlt}" />
+        <!-- Dropdown für Museumsbereiche -->
+        <Picker Title="Wählen Sie einen Museumsbereich"
+                Grid.Row="0"
+                ItemsSource="{Binding MuseumAreas}"
+                ItemDisplayBinding="{Binding AreaName}"
+                SelectedItem="{Binding SelectedMuseumArea}" />
+
+        <!-- Eintritt und Austritt Buttons -->
+        <Button Grid.Row="1" Text="Eintritt" Command="{Binding EintrittCommand}" IsEnabled="{Binding CanEnter}" 
+        Clicked="Button_Clicked" Pressed="Button_Pressed" Released="Button_Released" />
+        <Button Grid.Row="2" Text="Austritt" Command="{Binding AustrittCommand}" IsEnabled="{Binding CanExit}" 
+        Clicked="Button_Clicked" Pressed="Button_Pressed" Released="Button_Released" />
+
+
+        <!-- Farbindikator und Live Besucheranzahl -->
+        <StackLayout Grid.Row="3" HorizontalOptions="FillAndExpand">
+            <BoxView Color="{Binding IndicatorColor}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" CornerRadius="10"/>
+            <Label Text="{Binding CurrentVisitorCount, StringFormat='Aktuelle Anzahl Besucher: {0}'}" Padding="0,10,0,0"/>
         </StackLayout>
-
-        <!-- Eintritt Button -->
-        <Button Grid.Row="1" Text="Eintritt" Command="{Binding EintrittCommand}" Pressed="Button_Pressed" Released="Button_Released" />
-
-        <!-- Austritt Button -->
-        <Button Grid.Row="2" Text="Austritt" Command="{Binding AustrittCommand}" Pressed="Button_Pressed" Released="Button_Released" />
-
-        <!-- Farbindikator -->
-        <Button Grid.Row="3" BackgroundColor="{Binding IndicatorColor}" Command="{Binding YourCommand}" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
-
-        <!-- Besucheranzahl Bereich 1 -->
-        <Label Grid.Row="4" FontSize="Medium" IsVisible="{Binding IstBereich1Ausgewaehlt}" Text="{Binding BesucherBereich1, StringFormat='Aktuelle Anzahl Besucher: {0}'}" />
-
-        <!-- Besucheranzahl Bereich 2 -->
-        <Label Grid.Row="5" FontSize="Medium" IsVisible="{Binding IstBereich2Ausgewaehlt}" Text="{Binding BesucherBereich2, StringFormat='Aktuelle Anzahl Besucher: {0}'}" />
 
     </Grid>
 </ContentPage>
