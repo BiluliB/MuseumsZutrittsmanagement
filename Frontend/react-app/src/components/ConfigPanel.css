@@ -28,8 +28,8 @@ button {
   margin-right: 5px;
   padding: 5px 10px;
   border: none;
-  background-color: #4caf50;
-  color: white;
+  background-color: #90a5af;
+  color: rgb(0, 0, 0);
   cursor: pointer;
 }
 
