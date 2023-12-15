@@ -1,5 +1,8 @@
 ﻿namespace APIWebApplication.Models
 {
+    /// <summary>
+    /// Model for Accesslog
+    /// </summary>
     public class AccessLog
     {
         public int Id { get; set; }

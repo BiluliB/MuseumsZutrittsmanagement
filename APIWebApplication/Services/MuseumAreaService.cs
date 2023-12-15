@@ -1,11 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using APIWebApplication.Data;
-using APIWebApplication.DTO.Response;
+﻿using APIWebApplication.Data;
 using APIWebApplication.DTO.Request;
+using APIWebApplication.DTO.Response;
 using APIWebApplication.Models;
-using APIWebApplication.Services;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 

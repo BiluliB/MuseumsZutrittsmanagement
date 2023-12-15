@@ -1,12 +1,8 @@
 ﻿using APIWebApplication.Controllers;
 using APIWebApplication.DTO.Response;
 using APIWebApplication.Interfaces;
-using APIWebApplication.Services;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
 
 namespace APIWebApplication.Tests
 {
