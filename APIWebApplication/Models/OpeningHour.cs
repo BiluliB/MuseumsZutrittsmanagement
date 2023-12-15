@@ -1,5 +1,8 @@
 ﻿namespace APIWebApplication.Models
 {
+    /// <summary>
+    /// Model for openign hour
+    /// </summary>
     public class OpeningHour
     {
         public int Id { get; set; }

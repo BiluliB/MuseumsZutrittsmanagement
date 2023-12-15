@@ -2,6 +2,9 @@
 
 namespace APIWebApplication.DTO.Request
 {
+    /// <summary>
+    /// Represents a request DTO (Data Transfer Object) for updating a museum area.
+    /// </summary>
     public class UpdateMuseumAreaRequest
     {
         public string? AreaName { get; set; }
