@@ -64,6 +64,6 @@ Anleitung zur Verwendung der Anwendung:
 ## Mitwirkende
 
 - **ArdaBs** ([Profil ansehen](https://github.com/ArdaBs)) - Verantwortlich für SQL-Datenbank und Frontend/Backend-Entwicklung der MauiApp
-- **BiluliB** ([Profil ansehen](https://github.com/BiluliB)) - Frontend-Entwicklung der MauiApp
+- **BiluliB** ([Profil ansehen](https://github.com/BiluliB)) - Frontend-Entwicklung der MauiApp und xUnit Test
 - **davereichert** ([Profil ansehen](https://github.com/davereichert)) - C# Backendentwickler
 - **mahgoe** ([Profil ansehen](https://github.com/mahgoe)) - Entwickler für Webapplikation
