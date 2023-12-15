@@ -1,4 +1,5 @@
 ﻿using APIWebApplication.DTO.Request;
+using APIWebApplication.Interfaces;
 using APIWebApplication.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ namespace APIWebApplication.Controllers
     [ApiController]
     public class AccessLogController : ControllerBase
     {
-        private readonly AccessLogService _accessLogService;
+        private readonly IAccessLogService _accessLogService;
 
-        public AccessLogController(AccessLogService accessLogService)
+        public AccessLogController(IAccessLogService accessLogService)
         {
             _accessLogService = accessLogService;
         }
