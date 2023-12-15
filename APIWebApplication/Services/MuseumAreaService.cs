@@ -54,6 +54,7 @@ public class MuseumAreaService
         if (entity == null) return null;
         
         _context.MuseumAreas.Remove(entity);
+        await _context.SaveChangesAsync();
 
         return new DeletResponse { Id = id };
 
