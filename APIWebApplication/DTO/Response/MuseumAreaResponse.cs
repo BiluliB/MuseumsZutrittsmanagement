@@ -1,5 +1,8 @@
 ﻿namespace APIWebApplication.DTO.Response
 {
+    /// <summary>
+    /// Represents a response DTO (Data Transfer Object) for a museum area.
+    /// </summary>
     public class MuseumAreaResponse
     {
         public int Id { get; set; }

@@ -10,6 +10,9 @@ using Xunit;
 
 namespace APIWebApplication.Tests
 {
+    /// <summary>
+    /// Unit tests for the AccessLogController class.
+    /// </summary>
     public class AccessLogControllerTests
     {
         private readonly Mock<IAccessLogService> _mockService;
@@ -37,6 +40,6 @@ namespace APIWebApplication.Tests
             Assert.Equal(fakeAccessLogs, returnValue);
         }
 
-        // Weitere Tests für GetByIdAsync, CreatAsync, DeletAsync, UpdateAsync...
+        // Additional tests for GetByIdAsync, CreatAsync, DeletAsync, UpdateAsync...
     }
 }
