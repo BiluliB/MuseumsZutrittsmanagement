@@ -1,11 +1,10 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Input;
-using MuseumsZutrittMauiApp.DTO.Request;
-using Microsoft.Maui.Graphics;
+﻿using MuseumsZutrittMauiApp.DTO.Request;
 using MuseumsZutrittMauiApp.DTO.Response;
-using System.Net.Http.Json;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Net.Http.Json;
+using System.Windows.Input;
 
 namespace MuseumsZutrittMauiApp.ViewModels
 {
