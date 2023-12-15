@@ -55,7 +55,8 @@ Anleitung zur Verwendung der Anwendung:
 ## Dokumentation und Konventionen
 
 - Das Projekt folgt den Clean Code Prinzipien für eine klare und wartbare Codebasis.
-- Kommentare und Dokumentation sind in Englisch verfasst.
+- Kommentare ist in Englisch verfasst.
+- Dokumentation ist in Deutsch verfasst.
 
 ## Tests
 
