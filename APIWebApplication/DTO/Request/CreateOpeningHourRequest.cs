@@ -2,6 +2,9 @@
 
 namespace APIWebApplication.DTO.Request
 {
+    /// <summary>
+    /// Represents a request DTO (Data Transfer Object) for creating an opening hour record for a museum area.
+    /// </summary>
     public class CreateOpeningHourRequest
     {
         [Required]

@@ -7,6 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace APIWebApplication.Services
 {
+    /// <summary>
+    /// Service class for managing access log-related operations.
+    /// </summary>
     public class AccessLogService
     {
         private readonly AppDbContext _context;
@@ -19,16 +22,23 @@ namespace APIWebApplication.Services
 
         }
 
+        /// <summary>
+        /// Retrieves a list of access logs asynchronously.
+        /// </summary>
+        /// <returns>A list of access logs as response DTOs.</returns>
         public async Task<List<AccessLogResponse>> GetAllAsync()
         {
             var accessLog = await _context.AccessLogs.ToListAsync();
 
-
-
             return _mapper.Map<List<AccessLogResponse>>(accessLog);
         }
 
-        public async Task<AccessLogResponse> GetByIdAsync(int id)
+        /// <summary>
+        /// Retrieves an access log by its ID asynchronously.
+        /// </summary>
+        /// <param name="id">The ID of the access log to retrieve.</param>
+        /// <returns>An access log as a response DTO, or null if not found.</returns>
+        publicc async Task<AccessLogResponse> GetByIdAsync(int id)
         {
             var entity = await _context.AccessLogs.FindAsync(id);
             if (entity == null) return null;
@@ -36,6 +46,11 @@ namespace APIWebApplication.Services
             return _mapper.Map<AccessLogResponse>(entity);
         }
 
+        /// <summary>
+        /// Creates a new access log entry asynchronously.
+        /// </summary>
+        /// <param name="model">The request DTO containing access log data.</param>
+        /// <returns>The newly created access log as a response DTO.</returns>
         public async Task<AccessLogResponse> CreatAsync(CreateAccessLogRequest model)
         {
             var mapped = _mapper.Map<AccessLog>(model);
@@ -46,6 +61,11 @@ namespace APIWebApplication.Services
 
         }
 
+        /// <summary>
+        /// Deletes an access log entry by its ID asynchronously.
+        /// </summary>
+        /// <param name="id">The ID of the access log to delete.</param>
+        /// <returns>A response DTO indicating the result of the deletion.</returns>
         public async Task<DeletResponse> DeletAsync(int id)
         {
             var entity = await _context.AccessLogs.FindAsync(id);
@@ -58,6 +78,12 @@ namespace APIWebApplication.Services
 
         }
 
+        /// <summary>
+        /// Updates an access log entry asynchronously.
+        /// </summary>
+        /// <param name="id">The ID of the access log to update.</param>
+        /// <param name="model">The request DTO containing updated access log data.</param>
+        /// <returns>The updated access log as a response DTO, or null if not found.</returns>
         public async Task<AccessLogResponse> UpdateAsync(int id, UpdateAccessLogRequest model)
         {
             var entity = await _context.AccessLogs.FindAsync(id);

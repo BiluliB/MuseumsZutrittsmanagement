@@ -2,6 +2,9 @@
 
 namespace APIWebApplication.DTO.Request
 {
+    /// <summary>
+    /// Represents a request DTO (Data Transfer Object) for creating an access log entry.
+    /// </summary>
     public class CreateAccessLogRequest
     {
         [Required]
