@@ -52,6 +52,7 @@ namespace APIWebApplication.Services
             if (entity == null) return null;
 
             _context.AccessLogs.Remove(entity);
+            await _context.SaveChangesAsync();
 
             return new DeletResponse { Id = id };
 
