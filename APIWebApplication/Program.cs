@@ -1,6 +1,7 @@
 
 using APIWebApplication.Common;
 using APIWebApplication.Data;
+using APIWebApplication.Interfaces;
 using APIWebApplication.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,9 +23,10 @@ namespace MuseumsZutrittWebApplication
 
             // Add services to the container to programm.
             builder.Services.AddScoped<MuseumAreaService>();
-            builder.Services.AddScoped<AccessLogService>();
+            builder.Services.AddScoped<IAccessLogService, APIWebApplication.Services.AccessLogService>();
             builder.Services.AddScoped<OpeningHourService>();
             builder.Services.AddScoped<VisitorCapacityService>();
+
 
             builder.Services.AddControllers();
             

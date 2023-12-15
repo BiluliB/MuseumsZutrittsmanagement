@@ -28,7 +28,7 @@ namespace APIWebApplication.Services
         /// Retrieves a list of opening hours asynchronously.
         /// </summary>
         /// <returns>A list of opening hours as response DTOs.</returns>
-        public Task<List<OpeningHourResponse>> GetAllAsync()
+        public async Task<List<OpeningHourResponse>> GetAllAsync()
         {
             var openingHour = await _context.OpeningHours.ToListAsync();
 

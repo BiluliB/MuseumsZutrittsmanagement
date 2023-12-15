@@ -1,6 +1,7 @@
 ﻿using APIWebApplication.Data;
 using APIWebApplication.DTO.Request;
 using APIWebApplication.DTO.Response;
+using APIWebApplication.Interfaces;
 using APIWebApplication.Models;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +11,7 @@ namespace APIWebApplication.Services
     /// <summary>
     /// Service class for managing access log-related operations.
     /// </summary>
-    public class AccessLogService
+    public class AccessLogService : IAccessLogService
     {
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
@@ -38,7 +39,7 @@ namespace APIWebApplication.Services
         /// </summary>
         /// <param name="id">The ID of the access log to retrieve.</param>
         /// <returns>An access log as a response DTO, or null if not found.</returns>
-        publicc async Task<AccessLogResponse> GetByIdAsync(int id)
+        public async Task<AccessLogResponse> GetByIdAsync(int id)
         {
             var entity = await _context.AccessLogs.FindAsync(id);
             if (entity == null) return null;
